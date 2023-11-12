@@ -46,24 +46,27 @@ const ProfileButtonGroup = styled.View`
   padding: 4px 0px;
 `;
 
+const fetchESData = async () => {
+  const body = {
+    text: "박우림",
+    int: 235,
+  };
+
+  try {
+    const res = await fetchDataFromES("POST", "test/_doc", body);
+    res.forEach((element) => {
+      console.log(element._source);
+    });
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+};
+
 const MyPage = ({ navigation }) => {
   const avatarImage = require("../assets/avatar.jpeg");
 
   // fetchESData 함수를 호출할 적절한 시점, 예를 들어 컴포넌트의 useEffect 내부나 이벤트 핸들러에서 호출합니다.
   useEffect(() => {
-    console.log(1341);
-
-    const fetchESData = async () => {
-      console.log(55 + "start");
-      try {
-        const res = await fetchDataFromES("GET", "/test/_search");
-        console.log(res); // 이제 res는 응답 데이터를 담고 있어야 합니다.
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-      console.log(123 + "es the end"); // 이 로그는 fetchDataFromES가 완료된 후 실행됩니다.
-    };
-
     fetchESData();
   }, []);
 
